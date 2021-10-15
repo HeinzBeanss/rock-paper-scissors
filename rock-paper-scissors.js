@@ -37,9 +37,11 @@ function playerPlay() {
 
 function playRound(playerSelection, computerSelection) {
 
+    if (computerScore >=3 || playerScore >= 3) {
+        return
+    }
+
     playerSelection = playerPlay();
-
-
     computerSelection = computerPlay();
 
     if (playerSelection == computerSelection) {
