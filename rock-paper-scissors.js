@@ -1,3 +1,4 @@
+
 let rock = "rock";
 let paper = "paper";
 let scissors = "scissors";
@@ -37,73 +38,98 @@ function playerPlay() {
 
 function playRound(playerSelection, computerSelection) {
 
-    if (computerScore >=3 || playerScore >= 3) {
-        return
+    if (playerScore >=3 || computerScore >=3) {
+        const result = document.querySelector(".roundResult");
+        result.textContent = "You already played best of 5, refresh the page to have another game!";
+        return;
     }
 
-    playerSelection = playerPlay();
+    //playerSelection = playerPlay();
     computerSelection = computerPlay();
 
     if (playerSelection == computerSelection) {
-        console.log("It's a draw, you both chose the same!");
+        const result = document.querySelector(".roundResult");
+        result.textContent = "It's a draw, you both chose the same!";
         playRound();
     } else if (playerSelection == rock && computerSelection == paper) {
-        console.log("You lose, Paper beats Rock!");
+        const result = document.querySelector(".roundResult");
+        result.textContent = "Computer chose Paper. You lose, Paper beats Rock!";
+        images.setAttribute("src", "images/paper.jpg")
         computerScore++;
-        console.log("Player Score: " + playerScore + " Compter Score = " + computerScore);
     } else if (playerSelection == rock && computerSelection == scissors) {
-        console.log("You win, Rock beats Scissors!");
+        const result = document.querySelector(".roundResult");
+        result.textContent = "Computer chose Scissors. You win, Rock beats Scissors!";
+        images.setAttribute("src", "images/rock.gif")
         playerScore++;
-        console.log("Player Score: " + playerScore + " Compter Score = " + computerScore);
     } else if (playerSelection == paper && computerSelection == scissors) {
-        console.log("You lose, Scissors beats Paper!");
+        const result = document.querySelector(".roundResult");
+        result.textContent = "Computer chose Scissors. You lose, Scissors beats Paper!";
+        images.setAttribute("src", "images/scissors.gif")
         computerScore++;
-        console.log("Player Score: " + playerScore + " Compter Score = " + computerScore);
     } else if (playerSelection == paper && computerSelection == rock) {
-        console.log("You win, Paper beats Rock!");
+        const result = document.querySelector(".roundResult");
+        result.textContent = "Computer chose Rock. You win, Paper beats Rock!";
+        images.setAttribute("src", "images/paper.jpg")
         playerScore++;
-        console.log("Player Score: " + playerScore + " Compter Score = " + computerScore);
+
     } else if (playerSelection == scissors && computerSelection == rock) {
-        console.log("You lose, Rock beats Paper!");
+        const result = document.querySelector(".roundResult");
+        result.textContent = "Computer chose Rock. You lose, Rock beats Scissors!";
+        images.setAttribute("src", "images/rock.gif")
         computerScore++;
-        console.log("Player Score: " + playerScore + " Compter Score = " + computerScore);
     } else if (playerSelection == scissors && computerSelection == paper) {
-        console.log("You won, Scissors beats Paper!");
+        const result = document.querySelector(".roundResult");
+        result.textContent = "Computer chose Paper. You won, Scissors beats Paper!";
+        images.setAttribute("src", "images/scissors.gif")
         playerScore++;
-        console.log("Player Score: " + playerScore + " Compter Score = " + computerScore);
+    }
+
+    const gameResults = document.querySelector(".gameResults");
+    gameResults.textContent = "Player Score: " + playerScore + " Compter Score = " + computerScore;
+
+    if (playerScore >=3) {
+        const gameConclusion = document.querySelector(".gameConclusion");
+        gameConclusion.textContent = "You won the best of 5, congratulations!"
+        images.setAttribute("src", "images/win.gif")
+       
+    } else if (computerScore >=3) {
+        const gameConclusion = document.querySelector(".gameConclusion");
+        gameConclusion.textContent = "You lose the best of 5, that's unlucky..."
+        images.setAttribute("src", "images/lose.gif")
+        
     }
 }
 
-function game() {
+const mainContent = document.querySelector(".content");
 
-    for (i = 0; i < 5; i++) {
-        playRound(playerSelection, computerSelection);
-    }
+const images = document.createElement("img");
+images.classList.add("images");
+images.setAttribute("src", "images/before.gif")
 
-     if (playerScore > computerScore) {
-         return "You won the best of 5, congratulations!"
-     } else if (computerScore > playerScore) {
-         return "You lose the best of 5, that's unlucky..."
-     }
-
-}
-
-console.log(game());
-
-// console.log("You both chose the same, replay this round!");
-// playRound(playerSelection, computerSelection);
+mainContent.prepend(images);
 
 
-//   if (playerSelection !== rock || playerSelection !== scissors || playerSelection !== paper) {
-        // }
 
-//     if (playerSelection === null) {
-//  playerPlay();
-// } THIS IS NOT A GOOD IDEA, AVOID BECAUSE AFTER 2 FAILED ATTEMPTS IT JUST CARRIES ON INSTEAD OF GOING BACK.
+const buttons = document.querySelectorAll("button");
+buttons.forEach((button) => { 
+    button.addEventListener("click", function (e) {
+    playRound(button.id, );
+    // button.classList.add("selected"); only use if I can get it to get off after the next click.
+    })
+    });
 
-/* I have two issues to sort out and then it should be good to potentially improve:|
-   The first issue is that after a failed attempt in the prompt, it restarts the function to get a successful input from the user, but whenever that happens and the next input after a fail is successful, it doesn't return the value for some reason, so the value is undefined. 
-   Actually I think I've just finished this issue too, I'm a fucking beast. I had to return, then I wrote the function again, return playPlayer();
+/* const buttonSelected = document.querySelectorAll("button");
+buttons.forEach((button) => { 
+    button.addEventListener("transitionend", removeTransition)
+});
 
-   Issue 2: How to deal with draws, I want it to ideally restart that round and go again, if at all possible. It works now but for whatever reason it repeats the score twice?? figure that out.
-   Actually I think I just finished that nice. */
+function removeTransition(e) {
+    console.log(e)
+} */
+  
+    
+
+// also add another class also in css for last-selected, and it could highlight the border of 
+// which button the user selected. that would have to be edited in the js of the button click, 
+// maybe refer back to the video.
+// also maybe add a background.
